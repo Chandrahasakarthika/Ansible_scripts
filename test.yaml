@@ -1,0 +1,32 @@
+
+sts: all
+    remote_user: ansible
+        task:
+            - name: Ensure the HTTPDpackage is installed
+                  yum:
+                          name: httpd
+                                  state: present
+                                        become: True
+                                            - name: Ensure the HTTPD service is enabled and running
+                                                  service:
+                                                          name: httpd
+                                                                  state: started
+                                                                          enable: True
+                                                                                become: True
+                                                                                    - name: Ensure HTTP can pass the firewall
+                                                                                          service:
+                                                                                                  name: http
+                                                                                                          state: enabled
+                                                                                                                  permanent: True
+                                                                                                                          immediate: True
+                                                                                                                                become: True
+                                                                                                                                    - name: ensure the HTTPS can pass the firewall
+                                                                                                                                          firewalled:
+                                                                                                                                                  service: https
+                                                                                                                                                          state: Enabled
+                                                                                                                                                                  permanent: True
+                                                                                                                                                                          immediate: True
+                                                                                                                                                                                become: True
+
+
+
